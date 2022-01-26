@@ -7,7 +7,7 @@ LABEL maintainer="Matt McCormick matt.mccormick@kitware.com"
 # Crosstool-ng version
 # We use a git commit while waiting for 1.25 to release (1.24 is several years old)
 # crosstool-ng master 2021-09-20
-ENV CT_VERSION 5f5a22f7a7307790ec571d0c5acf8790416964e6
+# ENV CT_VERSION 5f5a22f7a7307790ec571d0c5acf8790416964e6
 
 #include "common.crosstool"
 
@@ -18,29 +18,35 @@ RUN apt-get update \
   qemu-user-static \
 && apt-get clean --yes
 
-# The CROSS_TRIPLE is a configured alias of the "aarch64-unknown-linux-gnu" target.
-ENV CROSS_TRIPLE aarch64-unknown-linux-gnu
+echo ${XCC_PREFIX}
+echo ${CROSS_TRIPLE}
+# ARG DOWNLOAD_URL=https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
+# ENV DOWNLOAD_URL=${DOWNLOAD_URL}
+# RUN mkdir -p ${CROSS_ROOT} && wget -qO- "${DOWNLOAD_URL}" | tar xJvf - --strip 1 -C ${CROSS_ROOT}/ > /dev/null
 
-ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
-ENV AS=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-as \
-    AR=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ar \
-    CC=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-gcc \
-    CPP=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-cpp \
-    CXX=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-g++ \
-    LD=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ld \
-    FC=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-gfortran
+# # The CROSS_TRIPLE is a configured alias of the "aarch64-unknown-linux-gnu" target.
+# ENV CROSS_TRIPLE aarch64-linux-gnu
 
-ENV QEMU_LD_PREFIX "${CROSS_ROOT}/${CROSS_TRIPLE}/sysroot"
-ENV QEMU_SET_ENV "LD_LIBRARY_PATH=${CROSS_ROOT}/lib:${QEMU_LD_PREFIX}"
+# ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
+# ENV AS=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-as \
+#     AR=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ar \
+#     CC=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-gcc \
+#     CPP=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-cpp \
+#     CXX=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-g++ \
+#     LD=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ld \
+#     FC=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-gfortran
 
-COPY Toolchain.cmake ${CROSS_ROOT}/
-ENV CMAKE_TOOLCHAIN_FILE ${CROSS_ROOT}/Toolchain.cmake
+# ENV QEMU_LD_PREFIX "${CROSS_ROOT}/${CROSS_TRIPLE}/sysroot"
+# ENV QEMU_SET_ENV "LD_LIBRARY_PATH=${CROSS_ROOT}/lib:${QEMU_LD_PREFIX}"
 
-ENV PKG_CONFIG_PATH /usr/lib/aarch64-linux-gnu/pkgconfig
+# COPY Toolchain.cmake ${CROSS_ROOT}/
+# ENV CMAKE_TOOLCHAIN_FILE ${CROSS_ROOT}/Toolchain.cmake
 
-# Linux kernel cross compilation variables
-ENV PATH ${PATH}:${CROSS_ROOT}/bin
-ENV CROSS_COMPILE ${CROSS_TRIPLE}-
+# ENV PKG_CONFIG_PATH /usr/lib/aarch64-linux-gnu/pkgconfig
+
+# # Linux kernel cross compilation variables
+# ENV PATH ${PATH}:${CROSS_ROOT}/bin
+# ENV CROSS_COMPILE ${CROSS_TRIPLE}-
 ENV ARCH arm64
 
 #include "common.label-and-env"
