@@ -18,8 +18,8 @@ RUN apt-get update \
   qemu-user-static \
 && apt-get clean --yes
 
-echo ${XCC_PREFIX}
-echo ${CROSS_TRIPLE}
+RUN echo ${XCC_PREFIX}
+RUN echo ${CROSS_TRIPLE}
 # ARG DOWNLOAD_URL=https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
 # ENV DOWNLOAD_URL=${DOWNLOAD_URL}
 # RUN mkdir -p ${CROSS_ROOT} && wget -qO- "${DOWNLOAD_URL}" | tar xJvf - --strip 1 -C ${CROSS_ROOT}/ > /dev/null
