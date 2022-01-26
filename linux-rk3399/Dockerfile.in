@@ -18,6 +18,7 @@ RUN apt-get update \
 && apt-get clean --yes
 ENV XCC_PREFIX=/usr/xcc
 ENV CROSS_TRIPLE aarch64-linux-gnu
+ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
 
 ARG DOWNLOAD_URL=https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
 ENV DOWNLOAD_URL=${DOWNLOAD_URL}
