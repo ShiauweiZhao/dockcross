@@ -9,7 +9,6 @@ LABEL maintainer="Matt McCormick matt.mccormick@kitware.com"
 # crosstool-ng master 2021-09-20
 # ENV CT_VERSION 5f5a22f7a7307790ec571d0c5acf8790416964e6
 
-#include "common.crosstool"
 
 # The cross-compiling emulator
 RUN apt-get update \
