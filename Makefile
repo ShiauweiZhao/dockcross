@@ -22,7 +22,7 @@ STANDARD_IMAGES = android-arm android-arm64 android-x86 android-x86_64 \
 	web-wasi \
 	windows-static-x86 windows-static-x64 windows-static-x64-posix windows-armv7 \
 	windows-shared-x86 windows-shared-x64 windows-shared-x64-posix windows-arm64 \
-	linux-rk3399
+	linux-rk3399 linux-imx6ull
 
 # Generated Dockerfiles.
 GEN_IMAGES = android-arm android-arm64 \
@@ -36,7 +36,7 @@ GEN_IMAGES = android-arm android-arm64 \
 	linux-armv6 linux-armv6-lts linux-armv6-musl \
 	linux-armv5 linux-armv5-musl linux-ppc64le linux-s390x \
 	linux-riscv64 linux-riscv32 linux-m68k-uclibc linux-x64-tinycc linux-xtensa-uclibc \
-	linux-rk3399
+	linux-rk3399 linux-imx6ull
 
 GEN_IMAGE_DOCKERFILES = $(addsuffix /Dockerfile,$(GEN_IMAGES))
 
