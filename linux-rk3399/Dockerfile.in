@@ -18,12 +18,16 @@ RUN apt-get update \
 && apt-get clean --yes
 ENV XCC_PREFIX=/usr/xcc
 ENV CROSS_TRIPLE aarch64-linux-gnu
+ENV SYSROOT_TRIPLE sysroot
 ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
-
+ENV SYSROOT ${CROSS_ROOT}/${SYSROOT_TRIPLE}
 ARG DOWNLOAD_URL=https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu.tar.xz
 ENV DOWNLOAD_URL=${DOWNLOAD_URL}
 RUN mkdir -p ${CROSS_ROOT} && wget -qO- "${DOWNLOAD_URL}" | tar xJvf - --strip 1 -C ${CROSS_ROOT}/ > /dev/null
-
+RUN mkdir -p ${SYSROOT}
+ARG SYSROOT_DOWNLOAD_URL=https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/sysroot-glibc-linaro-2.25-2019.12-aarch64-linux-gnu.tar.xz
+ENV SYSROOT_DOWNLOAD_URL=${SYSROOT_DOWNLOAD_URL}
+RUN  wget -qO- "${DOWNLOAD_URL}" | tar xJvf - --strip 1 -C ${CROSS_ROOT}/sysroot > /dev/null
 # # The CROSS_TRIPLE is a configured alias of the "aarch64-unknown-linux-gnu" target.
 # ENV CROSS_TRIPLE aarch64-linux-gnu
 
@@ -34,8 +38,8 @@ ENV AS=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-as \
     CPP=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-cpp \
     CXX=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-g++ \
     LD=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ld 
-RUN cd /usr/xcc/aarch64-linux-gnu/bin  &&ls
-# ENV QEMU_LD_PREFIX "${CROSS_ROOT}/${CROSS_TRIPLE}/sysroot"
+RUN cd /usr/xcc/aarch64-linux-gnu/sysroot  &&ls
+ENV QEMU_LD_PREFIX "${CROSS_ROOT}/${CROSS_TRIPLE}/sysroot"
 # ENV QEMU_SET_ENV "LD_LIBRARY_PATH=${CROSS_ROOT}/lib:${QEMU_LD_PREFIX}"
 
 COPY Toolchain.cmake ${CROSS_ROOT}/
