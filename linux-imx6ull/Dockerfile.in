@@ -38,7 +38,7 @@ ENV AS=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-as \
     CPP=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-cpp \
     CXX=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-g++ \
     LD=${CROSS_ROOT}/bin/${CROSS_TRIPLE}-ld 
-RUN cd /usr/xcc/arm-linux-gnu/bin  &&ls
+# RUN cd /usr/xcc/arm-linux-gnu/bin  &&ls
 ENV QEMU_LD_PREFIX "${CROSS_ROOT}/${CROSS_TRIPLE}/sysroot"
 # ENV "LD_LIBRARY_PATH=${CROSS_ROOT}/lib:${QEMU_LD_PREFIX}"
 
