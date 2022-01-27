@@ -17,7 +17,7 @@ RUN apt-get update \
   qemu-user-static \
 && apt-get clean --yes
 ENV XCC_PREFIX=/usr/xcc
-ENV CROSS_TRIPLE arm-linux-gnu
+ENV CROSS_TRIPLE arm-linux-gnueabihf
 ENV SYSROOT_TRIPLE sysroot
 ENV CROSS_ROOT ${XCC_PREFIX}/${CROSS_TRIPLE}
 ENV SYSROOT ${CROSS_ROOT}/${SYSROOT_TRIPLE}
